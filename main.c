@@ -9,14 +9,13 @@
 
 #define WIDTH	800
 #define HEIGHT	600
-#define SEEDS_COUNT	10
+#define SEEDS_COUNT	20
 
-#define COLOR_BG	0xCAD3F5
 
 #define SEED_RADIUS 5
 #define SEED_COLOR	0x24237A
 
-
+#define PALETTE_SIZE 10
 #define ROSEWATER	0xF4DBD6
 #define PINK		0xF5BDE6
 #define MAUVE		0xC6A0F6
@@ -28,7 +27,7 @@
 #define BLUE		0x8AADF4
 #define LAVENDER	0xB7BDF8
 
-#define OUTPUT_FILE_PATH	"output.ppm"
+#define OUTPUT_FILE_PATH	"voronoi.ppm"
 
 typedef uint32_t Color32;
 
@@ -37,7 +36,7 @@ typedef struct {
 } Point;
 
 static Color32 image[HEIGHT][WIDTH];
-static Color32 palette[SEEDS_COUNT] = {
+static Color32 palette[PALETTE_SIZE] = {
 	ROSEWATER,
 	PINK,
 	MAUVE,
@@ -139,14 +138,13 @@ void render_voronoi(void)
 					j = i;
 				}
 			}
-			image[y][x] = palette[j];
+			image[y][x] = palette[j % PALETTE_SIZE];
 		}
 	}
 }
 
 int main(void)
 {
-	fill_image(COLOR_BG);
 	generate_random_seeds();
 	render_voronoi();
 	render_seeds();
